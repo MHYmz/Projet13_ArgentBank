@@ -1,8 +1,10 @@
 import React from "react";
+import NavigatorBar from "../components/NavigatorBar";
 
 const HomePage = () => {
     return (
         <div>
+          < NavigatorBar/>
        <main>
        <div className="hero">
         <section className="hero-content">
