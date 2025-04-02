@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
+import FooterSection from "../components/FooterSection";
 
 function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
@@ -59,9 +60,7 @@ function SignUpPage() {
         </section>
       </main>
 
-      <footer className="footer">
-        <p className="footer-text">© 2023 Company Name</p>
-      </footer>
+     <FooterSection/>
     </>
   );
 }

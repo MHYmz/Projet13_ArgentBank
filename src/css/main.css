@@ -87,6 +87,7 @@ body {
   padding: 2rem;
   text-align: left;
   margin: 0 auto;
+  border-radius: 5px;
 }
 
 .hero-content .subtitle {
@@ -125,7 +126,7 @@ body {
 
 .features {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
 @media (min-width: 920px) {
