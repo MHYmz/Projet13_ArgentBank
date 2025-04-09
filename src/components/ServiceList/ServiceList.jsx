@@ -1,10 +1,11 @@
 import React from "react";
-import serviceData from "../data/serviceData";
-import ServiceCard from "../components/ServiceCard";
+import serviceData from "../../data/serviceData";
+import ServiceCard from "../ServiceCard/ServiceCard";
+import { ServiceWrapper } from "./ServiceListDesign.js";
 
 function ServiceList() {
   return (
-    <div>
+    <ServiceWrapper>
       {serviceData.map((service) => (
         <ServiceCard
           key={service.iconSrc}
@@ -15,7 +16,7 @@ function ServiceList() {
           {service.details}
         </ServiceCard>
       ))}
-    </div>
+    </ServiceWrapper>
   );
 }
 

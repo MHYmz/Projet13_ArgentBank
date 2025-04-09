@@ -1,12 +1,26 @@
 import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import FooterSection from "../components/FooterSection";
+import FooterSection from "../../components/FooterSection/FooterSection";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticateUser, getUserProfile } from "../store/authenticationSlice";
+import { authenticateUser, getUserProfile } from "../../store/authenticationSlice";
+import NavigatorBar from "../../components/NavigatorBar/NavigatorBar";
+import {
+  Container, 
+  FormSection,
+  UserIcon,
+  FieldGroup,
+  FieldLabel,
+  FieldInput,
+  RememberContainer,
+  RememberLabel,
+  SubmitBtn,
+  ErrorText,
+} from "./ConnectionPageDesign.js"
 
-function SignUpPage() {
+function ConnectionPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch ();
@@ -35,50 +49,45 @@ function SignUpPage() {
 
   return (
     <>
-      <nav className="navigation">
-        <Link className="navigation-logo" to="/">
-          <img className="navigation-logo-image" src="./img/argentBankLogo.png" alt="Company Logo" />
-          <h1 className="sr-only">Company Name</h1>
-        </Link>
-      </nav>
+     <NavigatorBar />
 
-      <main className="main-content bg-dark">
-        <section className="sign-in-section">
-          <i className="fa fa-user-circle sign-in-icon"></i>
+      <Container>
+        <FormSection>
+          <UserIcon className="fa fa-user-circle sign-in-icon"/>
           <h1>Log In</h1>
           <form onSubmit={handleFormSubmit}>
-            <div className="input-group">
-              <label htmlFor="user-email">Email Address</label>
-              <input 
+            <FieldGroup>
+              <FieldLabel htmlFor="user-email">Email Address</FieldLabel>
+              <FieldInput
               type="email" 
               id="user-email" 
               value={email} 
               onChange={handleEmailInputChange}
               autoComplete="username" />
-            </div>
-            <div className="input-group">
-              <label htmlFor="user-password">Password</label>
-              <input 
+              </FieldGroup>
+            <FieldGroup>
+              <FieldLabel htmlFor="user-password">Password</FieldLabel>
+              <FieldInput
               type="password" 
               id="user-password" 
               value={password} 
               onChange={handlePasswordInputChange} 
               autoComplete="current-password"
               />
-            </div>
-            <div className="remember-me-option">
+            </FieldGroup>
+            <RememberContainer>
               <input type="checkbox" id="remember-user" />
-              <label htmlFor="remember-user">Remember me</label>
-            </div>
-            <button className="submit-btn" type="submit"> Log In </button>
-            {error && <p className="error-message">{error}</p>}
+              <RememberLabel htmlFor="remember-user">Remember me</RememberLabel>
+            </RememberContainer>
+            <SubmitBtn className="submit-btn" type="submit"> Log In </SubmitBtn>
+            {error && <ErrorText>{error}</ErrorText>}
           </form>
-        </section>
-      </main>
+        </FormSection>
+      </Container>
 
      <FooterSection/>
     </>
   );
 }
 
-export default SignUpPage;
+export default ConnectionPage;

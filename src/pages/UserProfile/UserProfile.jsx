@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { refreshUserProfile, getUserProfile } from "../store/authenticationSlice";
-import NameEditor from "../components/NameEditor";
-import FooterSection from "../components/FooterSection";
-import BankAccount from "../components/BankAccount";
-import bankAccounts from "../data/bankAccounts";
-import NavigatorBar from "../components/NavigatorBar";
+import { refreshUserProfile, getUserProfile } from "../../store/authenticationSlice";
+import NameEditor from "../../components/NameEditor/NameEditor";
+import FooterSection from "../../components/FooterSection/FooterSection";
+import BankAccount from "../../components/BankAccount/BankAccount";
+import bankAccounts from "../../data/bankAccounts";
+import NavigatorBar from "../../components/NavigatorBar/NavigatorBar";
+import {
+  UserMainProfile,
+  UserProfileTitle,
+  ErrorMessage,
+} from "./UserProfileDesign.js"
 
 const UserProfilePage = () => {
   const profile = useSelector((state) => state.authentication.userProfile);
@@ -51,15 +56,12 @@ const UserProfilePage = () => {
     <>
       <NavigatorBar userName={userName} />
 
-      {error && <p className="error-message">Error: {error}</p>}
+      {error && <ErrorMessage>Error: {error}</ErrorMessage>}
 
-      <main className="user-main-profile">
-        <div className="userprofile-title">
+      <UserMainProfile>
+        <UserProfileTitle>
           <h1>
             Welcome back
-            <br />
-            <span className="user-name">{userName}</span>
-            <br />
             {profile && (
               <NameEditor
                 fullName={`${profile.firstName} ${profile.lastName}`}
@@ -68,7 +70,7 @@ const UserProfilePage = () => {
               />
             )}
           </h1>
-        </div>
+        </UserProfileTitle>
 
         <h2 className="sr-only">Accounts</h2>
         {bankAccounts.map((acc) => (
@@ -80,7 +82,7 @@ const UserProfilePage = () => {
             details={acc.details}
           />
         ))}
-      </main>
+      </UserMainProfile>
 
       <FooterSection />
     </>

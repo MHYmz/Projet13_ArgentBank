@@ -1,4 +1,13 @@
 import React, { useState } from "react";
+import {
+  InputField,
+  NameContainer,
+  EditButton, 
+  SaveButton,
+  CancelButton,
+  NameText,
+} from "./NameEditorDesign.js"
+
 
 const NameEditor = ({ fullName, onSave, onCancel }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -10,26 +19,24 @@ const NameEditor = ({ fullName, onSave, onCancel }) => {
   };
 
   return (
-    <div>
+    <NameContainer>
       {isEditing ? (
         <>
-          <input
+          <InputField
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
-          <button onClick={handleSave}>
-            Save
-          </button>
-          <button onClick={() => { setIsEditing(false); onCancel(); }}> Cancel </button>
+          <SaveButton onClick={handleSave}> Save </SaveButton>
+          <CancelButton onClick={() => { setIsEditing(false); onCancel(); }}> Cancel </CancelButton>
         </>
       ) : (
         <>
-          <span>{newName}</span>
-          <button onClick={() => setIsEditing(true)} > Edit </button>
+          <NameText>{newName}</NameText>
+          <EditButton onClick={() => setIsEditing(true)} > Edit </EditButton>
         </>
       )}
-    </div>
+    </NameContainer>
   );
 };
 

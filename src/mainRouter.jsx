@@ -1,8 +1,8 @@
 import React from "react";
 import {Routes, Route} from "react-router";
-import HomePage from "./pages/HomePage"
-import Connect from "./pages/ConnectionPage";
-import UserProfile from "./pages/UserProfile";
+import HomePage from "./pages/HomePage/HomePage"
+import Connect from "./pages/ConnectionPage/ConnectionPage";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 const MainRouter = () => { 
   return ( 
