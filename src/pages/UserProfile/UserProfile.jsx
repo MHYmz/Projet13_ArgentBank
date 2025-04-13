@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUserProfile, getUserProfile } from "../../store/authenticationSlice";
 import NameEditor from "../../components/NameEditor/NameEditor";
@@ -17,12 +18,20 @@ const UserProfilePage = () => {
   const error = useSelector((state) => state.authentication.loginError);
   const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
+  const authToken = localStorage.getItem("jwtToken");
+
+  useEffect(() => {
+    if(authToken) {
+      dispatch(getUserProfile(authToken));
+    }
+  }, [dispatch, authToken]);
 
   useEffect(() => {
     if (profile) {
-      setUserName(`${profile.firstName} ${profile.lastName}`);
+      setUserName (`${profile.firstName} ${profile.lastName}`);
     }
   }, [profile]);
+  
 
   const handleNameUpdate = async (newName) => {
     const jwtToken = localStorage.getItem("jwtToken");
@@ -43,14 +52,10 @@ const UserProfilePage = () => {
 
   const handleNameCancel = () => {};
 
-  useEffect(() => {
-    const authToken = localStorage.getItem("jwtToken");
-    if (!authToken) {
-      window.location.href = "/connect";
-    } else {
-      dispatch(getUserProfile(authToken));
-    }
-  }, [dispatch]);
+  // Redirection conditionnelle si pas de token 
+  if (!authToken) {
+    return <Navigate to="/connect" replace/> 
+  }
 
   return (
     <>
