@@ -1,7 +1,10 @@
 import React from "react";
 import { Container,Content, Title, Balance, Description, ButtonWrapper, ActionButton, } from "./BankAccountDesign.js";
+import { Link } from "react-router-dom";
 
 const BankAccount = ({ name, number, balance, details }) => {
+
+  
   return (
     <Container>
       <Content >
@@ -12,7 +15,9 @@ const BankAccount = ({ name, number, balance, details }) => {
         <Description>{details}</Description>
       </Content>
       <ButtonWrapper>
-        <ActionButton>View transactions</ActionButton>
+        <Link to={`/transactions/${number}`} state={{ accountName: name}}>
+        <ActionButton >View transactions</ActionButton>
+        </Link>
       </ButtonWrapper>
     </Container>
   );

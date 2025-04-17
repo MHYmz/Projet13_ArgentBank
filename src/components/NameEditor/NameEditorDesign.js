@@ -7,13 +7,24 @@ export const NameContainer = styled.div`
   gap: 20px;
 `;
 
+export const NameInputContainer = styled.div`
+display: flex;
+gap: 10px;
+margin-top:10px;
+`;
+
+export const ButtonContainer = styled.div`
+display: flex;
+gap: 10px;
+`;
+
 export const InputField = styled.input`
   width: 200px;
   padding: 8px;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(255, 255, 255);
   &:focus {
-    border-color: #00bc77;
+    border-color:rgb(148, 0, 211);
     outline: none;
   }
 `;
@@ -21,9 +32,9 @@ export const InputField = styled.input`
 export const SaveButton = styled.button`
   width: 80px;
   padding: 10px;
-  color: white;
-  background-color: #00bc77;
-  border: none;
+  color: rgb(148, 0, 211);
+  background-color:rgb(255, 255, 255);
+  border: 1px solid rgb(148, 0, 211);
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
   &:hover {
@@ -34,9 +45,9 @@ export const SaveButton = styled.button`
 export const CancelButton = styled.button`
   width: 80px;
   padding: 10px;
-  color: white;
-  background-color: #e0e0e0;
-  border: none;
+  color: rgb(148, 0, 211);
+  background-color:rgb(255, 255, 255);
+  border: 1px solid rgb(148, 0, 211);
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
   &:hover {
@@ -46,9 +57,9 @@ export const CancelButton = styled.button`
 
 export const EditButton = styled.button`
   padding: 8px 16px;
-  background-color: #00bc77;
-  color: white;
-  border: none;
+  background-color:rgb(255, 255, 255);
+  color: rgb(148, 0, 211);
+  border: 1px solid rgb(148,0,211);
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;

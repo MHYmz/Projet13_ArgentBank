@@ -56,8 +56,9 @@ export const ActionButton = styled.button`
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 1.2rem;
-  border-color: #4caf50;
-  background-color: #4caf50;
+  border-radius:10px;
+  border-color: rgb(138, 43, 226);
+  background-color: rgb(138, 43, 226);
   color: #fff;
   @media (min-width: 720px) {
     width: 220px;

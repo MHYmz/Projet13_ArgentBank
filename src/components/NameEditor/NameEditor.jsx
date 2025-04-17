@@ -6,15 +6,18 @@ import {
   SaveButton,
   CancelButton,
   NameText,
+  NameInputContainer,
+  ButtonContainer,
 } from "./NameEditorDesign.js"
 
 
-const NameEditor = ({ fullName, onSave, onCancel }) => {
+const NameEditor = ({ firstName, lastName, onSave, onCancel }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [newName, setNewName] = useState(fullName);
+  const [newFirstName, setNewFirstName] = useState(firstName);
+  const [newLastName, setNewLastName] = useState(lastName);
 
   const handleSave = () => {
-    onSave(newName);
+    onSave(newFirstName,newLastName);
     setIsEditing(false);
   };
 
@@ -22,17 +25,29 @@ const NameEditor = ({ fullName, onSave, onCancel }) => {
     <NameContainer>
       {isEditing ? (
         <>
+        <NameInputContainer>
           <InputField
             type="text"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
+            value={newFirstName}
+            onChange={(e) => setNewFirstName(e.target.value)}
+            placeholder="First Name"
           />
+          <InputField
+            type="text"
+            value={newLastName}
+            onChange={(e) => setNewLastName(e.target.value)}
+            placeholder="Last Name"
+          />
+          </NameInputContainer>
+          
+          <ButtonContainer>
           <SaveButton onClick={handleSave}> Save </SaveButton>
           <CancelButton onClick={() => { setIsEditing(false); onCancel(); }}> Cancel </CancelButton>
+          </ButtonContainer>
         </>
       ) : (
         <>
-          <NameText>{newName}</NameText>
+          <NameText>{newFirstName}{newLastName}</NameText>
           <EditButton onClick={() => setIsEditing(true)} > Edit </EditButton>
         </>
       )}

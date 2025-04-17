@@ -17,7 +17,8 @@ const UserProfilePage = () => {
   const profile = useSelector((state) => state.authentication.userProfile);
   const error = useSelector((state) => state.authentication.loginError);
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const  [lastName, setLastName] = useState("");
   const authToken = localStorage.getItem("jwtToken");
 
   useEffect(() => {
@@ -28,29 +29,34 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     if (profile) {
-      setUserName (`${profile.firstName} ${profile.lastName}`);
+     setFirstName(profile.firstName);
+     setLastName(profile.lastName);
     }
   }, [profile]);
   
 
-  const handleNameUpdate = async (newName) => {
+  const handleNameUpdate = (newFirstName,newLastName) => {
     const jwtToken = localStorage.getItem("jwtToken");
   
     if (!jwtToken) return;
   
     const updatedProfile = {
-      firstName: newName.split(" ")[0],
-      lastName: newName.split(" ").slice(1).join(" "),
+      firstName: newFirstName,
+      lastName: newLastName,
     };
   
     try {
-      await dispatch(refreshUserProfile({ token: jwtToken, updatedProfile }));
+    dispatch(refreshUserProfile({ token: jwtToken, updatedProfile }));
     } catch (error) {
       console.error("Profile update failed:", error);
     }
   };
 
-  const handleNameCancel = () => {};
+  const handleNameCancel = () => {
+    setFirstName(profile.firstName);
+    setLastName(profile.lastName);
+  };
+
 
   // Redirection conditionnelle si pas de token 
   if (!authToken) {
@@ -59,7 +65,7 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <NavigatorBar userName={userName} />
+      <NavigatorBar userName={`${firstName} ${lastName}`} />
 
       {error && <ErrorMessage>Error: {error}</ErrorMessage>}
 
@@ -69,7 +75,8 @@ const UserProfilePage = () => {
             Welcome back
             {profile && (
               <NameEditor
-                fullName={`${profile.firstName} ${profile.lastName}`}
+                firstName={firstName}
+                lastName={lastName}
                 onSave={handleNameUpdate}
                 onCancel={handleNameCancel}
               />
