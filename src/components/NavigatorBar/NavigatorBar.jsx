@@ -5,8 +5,10 @@ import {
   StyledLink, 
   ItemNav, 
   BrandImage, 
-  UserAction 
+  UserAction,
+  LoginAction,
 } from "./NavigatorBarDesign.js";
+import { FaUserCircle } from "react-icons/fa";
 
 const NavigatorBar = () => {
   const isAuthenticated = localStorage.getItem("jwtToken") !== null;
@@ -18,13 +20,22 @@ const NavigatorBar = () => {
       <StyledLink to="/">
         <BrandImage src={logoSrc} alt="ArgentBank Logo" />  
       </StyledLink>
+
       <ItemNav>
+      {isAuthenticated && (
+        <StyledLink to="/dashboard" title="Accéder au profil utilisateur">
+          <LoginAction>
+            <FaUserCircle />
+          </LoginAction>
+        </StyledLink>
+      )}
+
         {isAuthenticated ? (
           <ExitButton />
         ) : ( 
           <StyledLink to={isAuthenticated ? "/dashboard" : "/connect"}>
             <UserAction>
-              <i className="fa fa-user-circle"></i>
+              <FaUserCircle />
               Log In
             </UserAction>
           </StyledLink>

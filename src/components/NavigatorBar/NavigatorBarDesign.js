@@ -50,3 +50,20 @@ export const BrandImage = styled.img`
     width: 180px;
   }
 `;
+
+export const LoginAction = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+
+  svg {
+    font-size: 20px;
+  }
+
+  &:hover {
+    color: #00bc77;
+  }
+`;
