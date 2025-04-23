@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   InputField,
   NameContainer,
@@ -15,6 +15,12 @@ const NameEditor = ({ firstName, lastName, onSave, onCancel }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newFirstName, setNewFirstName] = useState(firstName);
   const [newLastName, setNewLastName] = useState(lastName);
+
+  useEffect(() => {
+    setNewFirstName(firstName);
+    setNewLastName(lastName);
+  }, [firstName, lastName]);
+
 
   const handleSave = () => {
     onSave(newFirstName,newLastName);
@@ -41,14 +47,14 @@ const NameEditor = ({ firstName, lastName, onSave, onCancel }) => {
           </NameInputContainer>
           
           <ButtonContainer>
-          <SaveButton onClick={handleSave}> Save </SaveButton>
-          <CancelButton onClick={() => { setIsEditing(false); onCancel(); }}> Cancel </CancelButton>
+          <SaveButton onClick={handleSave}>Save</SaveButton>
+          <CancelButton onClick={() => { setIsEditing(false); onCancel(); }}>Cancel</CancelButton>
           </ButtonContainer>
         </>
       ) : (
         <>
-          <NameText>{newFirstName}{newLastName}</NameText>
-          <EditButton onClick={() => setIsEditing(true)} > Edit </EditButton>
+          <NameText>{newFirstName} {newLastName}</NameText>
+          <EditButton onClick={() => setIsEditing(true)}>Edit</EditButton>
         </>
       )}
     </NameContainer>
