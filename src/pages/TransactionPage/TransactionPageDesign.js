@@ -5,7 +5,7 @@ export const Container = styled.div`
   padding: 2rem;
   max-width: 900px;
   margin: 0 auto;
-  background-color: #fafafa;
+  background-color: #F0F0F2;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 `;
@@ -60,7 +60,7 @@ export const DropdownButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
-  color:rgb(148, 0, 211);
+  color:rgb(0, 0, 0);
   transition: color 0.3s;
 
   &:hover {
@@ -125,6 +125,57 @@ export const EditIcon = styled.span`
 
   &:hover {
     color: #0056b3;
+  }
+`;
+
+
+export const Toast = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 0; /* Initialement invisible */
+  animation: fadeInOut 4s ease-in-out forwards;
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    25% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    75% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+`;
+
+
+export const SaveButton = styled.button`
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #0056b3;
   }
 `;
 

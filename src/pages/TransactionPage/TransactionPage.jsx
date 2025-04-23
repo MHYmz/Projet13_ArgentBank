@@ -13,22 +13,31 @@ import {
   Input,
   Textarea,
   EditIcon,
+  SaveButton,
+  Toast,
 } from "./TransactionPageDesign.js";
 
 import transactionsData from "../../data/transactions";
+import NavigatorBar from "../../components/NavigatorBar/NavigatorBar.jsx";
 
 const TransactionPage = () => {
-
   // Hooks appelés systématiquement en début de fonction
   const { accountNumber } = useParams();
   const location = useLocation();
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [categories, setCategories] = useState({});
-  const [notes, setNotes] = useState({});
+  const [categories, setCategories] = useState(() => {
+    return JSON.parse(localStorage.getItem("categories")) || {};
+});
+
+const [notes, setNotes] = useState(() => {
+  return JSON.parse(localStorage.getItem("notes")) || {};
+});
+
+const [editMode, setEditMode] = useState({});
+const [toastMessage, setToastMessage] = useState ("");
 
   // Récupération du token (ce n'est pas un hook, donc peut venir après)
   const authToken = localStorage.getItem("jwtToken");
-
   // Si pas de token, redirection
   if (!authToken) {
     return <Navigate to="/connect" replace />;
@@ -36,23 +45,46 @@ const TransactionPage = () => {
 
   const accountName = location.state?.accountName || "Account";
   const transactions = transactionsData[accountNumber] || [];
+  const latestBalance = transactions.length > 0 ? transactions[transactions.length - 1 ].balance : 0;
+
+
 
   const toggleDetails = (idx) =>
     setExpandedIndex(expandedIndex === idx ? null : idx);
 
-  const handleCategoryChange = (idx, value) =>
-    setCategories((prev) => ({ ...prev, [idx]: value }));
+  const toggleEdit = (idx) => 
+    setEditMode((prev) => ({ ...prev, [idx]: !prev[idx] }));
 
-  const handleNoteChange = (idx, value) =>
+  const handleCategoryChange = (idx, value) => {
+    if (!editMode[idx]) return;
+  setCategories((prev) => ({ ...prev, [idx]: value }));
+  };
+
+  const handleNoteChange = (idx, value) => {
+    if (!editMode[idx]) return;
     setNotes((prev) => ({ ...prev, [idx]: value }));
+  }
+
+  const handleSave = (idx) => {
+    localStorage.setItem("categories", JSON.stringify(categories || {} ));
+    localStorage.setItem("notes", JSON.stringify(notes || {} ));
+    setEditMode((prev) => ({ ...prev, [idx]: false }))
+    setToastMessage("Modifications enregistrées avec succès");
+    setTimeout(() => setToastMessage(""), 3000);
+  };
 
   return (
+    <div>
+      <NavigatorBar />
+      {toastMessage && <Toast> {toastMessage}</Toast>}
     <Container>
       <Header>
         <BackButton to="/dashboard">← Back to Accounts</BackButton>
         <h2>
           Transactions for {accountName} ({accountNumber})
         </h2>
+        <p>Last Balance: {latestBalance}</p>
+        <p>Available Balance: {latestBalance}</p>
       </Header>
 
       <Table>
@@ -92,10 +124,12 @@ const TransactionPage = () => {
                           type="text"
                           value={categories[idx] ?? tx.category}
                           onChange={(e) =>
-                            handleCategoryChange(idx, e.target.value)
-                          }
+                            handleCategoryChange(idx, e.target.value)}
+                            disabled={!editMode[idx]}
                         />
-                        <EditIcon>✎</EditIcon>
+                        <EditIcon onClick={() => toggleEdit(idx)}>
+                          {editMode[idx] ? "✓" :"✎" } 
+                          </EditIcon>
                       </Label>
 
                       <Label>
@@ -103,11 +137,18 @@ const TransactionPage = () => {
                         <Textarea
                           value={notes[idx] ?? tx.note}
                           onChange={(e) =>
-                            handleNoteChange(idx, e.target.value)
-                          }
+                            handleNoteChange(idx, e.target.value)}
+                            disabled={!editMode[idx]}
                         />
-                        <EditIcon>✎</EditIcon>
+
+                        <EditIcon onClick={() => toggleEdit(idx)}>
+                          {editMode[idx] ? "✓" : "✎" } 
+                          </EditIcon>
                       </Label>
+
+                      {editMode[idx] && (
+                        <SaveButton onClick={() => handleSave(idx)}>Save</SaveButton>
+                      )}
                     </DetailsContainer>
                   </td>
                 </DetailsRow>
@@ -117,6 +158,7 @@ const TransactionPage = () => {
         </tbody>
       </Table>
     </Container>
+    </div>
   );
 };
 
