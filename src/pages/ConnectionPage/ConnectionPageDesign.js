@@ -32,6 +32,7 @@ export const FieldGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  position:relative;
 `;
 
 export const FieldLabel = styled.label`
@@ -89,4 +90,14 @@ export const NavLogoLink = styled(Link)`
 
 export const LogoImage = styled.img`
   height: 40px;
+`;
+
+export const ShowPasswordIcon = styled.div`
+  position: absolute;
+  right: 10px;
+  top: 31px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: ${({ show }) => (show ? "#007bff" : "#ccc")};
+  transition: color 0.3s;
 `;
